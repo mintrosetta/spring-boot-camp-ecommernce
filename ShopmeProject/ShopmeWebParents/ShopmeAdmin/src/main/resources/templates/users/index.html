@@ -1,25 +1,28 @@
 <!DOCTYPE html>
 <html>
+
 <head xmlns:th="http://www.thymeleaf.org">
-<meta charset="UTF-8" http-equiv="Content-Type">
-<meta name="viewport"
-	content="width=device-width, initial-scole=1.0, minimum-scale=1.0">
-<title>Manage Users - Shopme Admin</title>
-<link rel="stylesheet" type="text/css"
-	th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}">
-<script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}"></script>
+	<meta charset="UTF-8" http-equiv="Content-Type">
+	<meta name="viewport" content="width=device-width, initial-scole=1.0, minimum-scale=1.0">
+	<title>Manage Users - Shopme Admin</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+	<link rel="stylesheet" th:href="@{/style.css}">
+
+	<script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}"></script>
 </head>
+
 <body>
 	<nav th:replace="~{commons/navbar :: navbar}"></nav>
-	
+
 	<div class="container">
 		<div>
 			<h2>Manage Users</h2>
 			<a th:href="@{/users/create}">Create User</a>
 		</div>
-		
+
 		<p th:if="${message != null}" th:text="${message}" class="alert alert-success"></p>
-		
+
 		<div>
 			<table class="table table-bordered table-striped table-hover">
 				<thead>
@@ -37,7 +40,9 @@
 				<tbody>
 					<tr th:each="user : ${users}" th:object="${user}">
 						<td th:text="*{id}"></td>
-						<td th:text="*{photos}"></td>
+						<td class="text-center">
+							<i class="fa-solid fa-user fa-1x icon-dark"></i>
+						</td>
 						<td th:text="*{email}"></td>
 						<td th:text="*{firstName}"></td>
 						<td th:text="*{lastName}"></td>
@@ -57,4 +62,5 @@
 		</div>
 	</div>
 </body>
+
 </html>
