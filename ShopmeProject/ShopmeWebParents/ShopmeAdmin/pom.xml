@@ -6,7 +6,6 @@
 		<groupId>com.shopme.parents</groupId>
 		<artifactId>ShopmeWebParents</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.shopme.admin</groupId>
 	<artifactId>ShopmeAdmin</artifactId>

@@ -17,12 +17,18 @@
 			<h2>Manage User | Create new user</h2>
 		</div>
 		
-		<form th:action="@{/users/create}" method="POST" th:object="${user}" style="max-width: 700px; margin: 0 auto;">
+		<form 
+			th:action="@{/users/create}" 
+			method="POST" 
+			th:object="${user}"
+			style="max-width: 700px; margin: 0 auto;"
+			id="formCreateUser"
+			onsubmit="return checkEmailUnique();">
 			<div class="border border-secondary rounded p-3">
 				<div class="form-group row my-2">
 					<label class="form-label col-sm-4">Email</label>
 					<div class="col-sm-8">
-						<input type="email" class="form-control" th:field="*{email}" required minlength="8" maxlength="128">
+						<input type="email" class="form-control" id="email" th:field="*{email}" required minlength="8" maxlength="128">
 					</div>
 				</div>
 				
@@ -68,6 +74,8 @@
 						<input type="checkbox" th:field="*{enabled}">
 					</div>
 				</div>
+
+				<div id="errors"></div>
 				
 				<div class="text-center">
 					<input type="submit" value="Create" class="btn btn-primary">
@@ -85,6 +93,25 @@
 		document.getElementById('cancelBtn').addEventListener('click', () => {
 			window.location = '[[@{/users}]]'
 		});
+		
+		function checkEmailUnique(form) {	
+			const url = '[[@{/api/users/check_email}]]';
+			const email = document.getElementById('email').value;
+
+			fetch(`${url}?email=${email}`).then((response) => {
+				return response.text();
+			}).then((response) => {
+
+				if (response === 'OK') {
+					document.getElementById("formCreateUser").submit()
+				} else {
+					const errors = document.getElementById('errors');
+					errors.innerHTML = `<p class='alert alert-danger'>Email ${email} is aleady to use</p>`
+				}
+			});
+			
+			return false;
+		}
 	</script>
 </body>
 </html>
