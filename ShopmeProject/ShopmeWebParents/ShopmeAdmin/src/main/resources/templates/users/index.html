@@ -49,7 +49,7 @@
 						<td th:text="*{roles}"></td>
 						<td th:text="*{enabled}"></td>
 						<td>
-							<a class="btn btn-warning">Edit</a>
+							<a class="btn btn-warning" th:href="@{/users/edit/{userId}(userId=${user.id})}">Edit</a>
 							<a class="btn btn-danger">Delete</a>
 						</td>
 					</tr>

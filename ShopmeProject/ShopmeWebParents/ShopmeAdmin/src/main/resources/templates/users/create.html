@@ -4,7 +4,7 @@
 <meta charset="UTF-8" http-equiv="Content-Type">
 <meta name="viewport"
 	content="width=device-width, initial-scole=1.0, minimum-scale=1.0">
-<title>ADMIN - Create user</title>
+<title th:text="${pageTitle}"></title>
 <link rel="stylesheet" type="text/css"
 	th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}">
 <script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}"></script>
@@ -14,7 +14,7 @@
 	
 	<div class="container">
 		<div>
-			<h2>Manage User | Create new user</h2>
+			<h2>Manage User | [[${pageTitle}]]</h2>
 		</div>
 		
 		<form 
@@ -23,8 +23,9 @@
 			th:object="${user}"
 			style="max-width: 700px; margin: 0 auto;"
 			id="formCreateUser"
-			onsubmit="return checkEmailUnique();">
+			onsubmit="">
 			<div class="border border-secondary rounded p-3">
+				<input type="hidden" th:field="*{id}">
 				<div class="form-group row my-2">
 					<label class="form-label col-sm-4">Email</label>
 					<div class="col-sm-8">
@@ -49,7 +50,22 @@
 				<div class="form-group row my-2">
 					<label class="form-label col-sm-4">Password</label>
 					<div class="col-sm-8">
-						<input type="password" class="form-control" th:field="*{password}" required minlength="8" maxlength="20">
+						<input 
+							th:if="${user.id == null}" 
+							type="password" 
+							class="form-control" 
+							th:field="*{password}" 
+							required 
+							minlength="8" 
+							maxlength="20">
+							
+						<input 
+							th:if="${user.id != null}" 
+							type="password" 
+							class="form-control" 
+							th:field="*{password}"  
+							minlength="8" 
+							maxlength="20">
 					</div>
 				</div>
 				
@@ -95,6 +111,9 @@
 		});
 		
 		function checkEmailUnique(form) {	
+			const userId = document.getElementById('id').value;
+			if (userId != null) return true;
+				
 			const url = '[[@{/api/users/check_email}]]';
 			const email = document.getElementById('email').value;
 
