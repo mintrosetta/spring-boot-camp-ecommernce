@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8" http-equiv="Content-Type">
+<meta name="viewport"
+	content="width=device-width, initial-scole=1.0, minimum-scale=1.0">
+<title>Manage Users - Shopme Admin</title>
+<link rel="stylesheet" type="text/css"
+	th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}">
+<script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}"></script>
+</head>
+<body>
+	<nav th:replace="~{commons/navbar :: navbar}"></nav>
+	
+	<div class="container">
+		<div>
+			<h2>Manage Users</h2>
+		</div>
+		
+		<div>
+			<table class="table table-bordered table-striped table-hover">
+				<thead>
+					<tr>
+						<th>User ID</th>
+						<th>Photos</th>
+						<th>Email</th>
+						<th>First Name</th>
+						<th>Last Name</th>
+						<th>Roles</th>
+						<th>Enable</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="user : ${users}" th:object="${user}">
+						<td th:text="*{id}"></td>
+						<td th:text="*{photos}"></td>
+						<td th:text="*{email}"></td>
+						<td th:text="*{firstName}"></td>
+						<td th:text="*{lastName}"></td>
+						<td th:text="*{roles}"></td>
+						<td th:text="*{enabled}"></td>
+						<td>
+							<a class="btn btn-warning">Edit</a>
+							<a class="btn btn-danger">Delete</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="text-center">
+			<p>Shopme control panel - Copyright &copy; shopme</p>
+		</div>
+	</div>
+</body>
+</html>
