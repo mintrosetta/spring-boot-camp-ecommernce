@@ -91,4 +91,16 @@ public class UserController {
 		
 		return "redirect:/users";
 	}
+	
+	@GetMapping("enabled/{userId}/false")
+	public String disableUserById(@PathVariable("userId") Integer userId, Model model) {
+		this.userService.updateUSerEnabledStatus(userId, false);
+		return "redirect:/users";
+	}
+	
+	@GetMapping("enabled/{userId}/true")
+	public String enableUserById(@PathVariable("userId") Integer userId, Model model) {
+		this.userService.updateUSerEnabledStatus(userId, true);
+		return "redirect:/users";
+	}
 }

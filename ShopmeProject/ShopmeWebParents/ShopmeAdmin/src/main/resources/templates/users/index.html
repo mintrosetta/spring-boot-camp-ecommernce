@@ -47,7 +47,10 @@
 						<td th:text="*{firstName}"></td>
 						<td th:text="*{lastName}"></td>
 						<td th:text="*{roles}"></td>
-						<td th:text="*{enabled}"></td>
+						<td>
+							<a th:if="*{enabled == true}" class="btn btn-success" th:href="@{/users/enabled/{userId}/false(userId=*{id})}">enable</a>
+							<a th:if="*{enabled == false}" class="btn btn-danger" th:href="@{/users/enabled/{userId}/true(userId=*{id})}">disable</a>
+						</td>
 						<td>
 							<a class="btn btn-warning" th:href="@{/users/edit/{userId}(userId=${user.id})}">Edit</a>
 							<a id="deleteBtn" th:attr="onclick=|deleteUser(${user.id})|" class="btn btn-danger">Delete</a>
