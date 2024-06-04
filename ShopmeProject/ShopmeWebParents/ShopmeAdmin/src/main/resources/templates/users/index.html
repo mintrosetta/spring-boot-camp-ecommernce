@@ -50,7 +50,7 @@
 						<td th:text="*{enabled}"></td>
 						<td>
 							<a class="btn btn-warning" th:href="@{/users/edit/{userId}(userId=${user.id})}">Edit</a>
-							<a class="btn btn-danger">Delete</a>
+							<a id="deleteBtn" th:attr="onclick=|deleteUser(${user.id})|" class="btn btn-danger">Delete</a>
 						</td>
 					</tr>
 				</tbody>
@@ -61,6 +61,18 @@
 			<p>Shopme control panel - Copyright &copy; shopme</p>
 		</div>
 	</div>
+	
+	<script>
+		function deleteUser(id) {
+			const isConfirm = confirm('Confirm remove user ID: ' + id + ' ?');
+			
+			if (isConfirm) {
+				const url = '[[@{users/delete/}]]' + id;
+				
+				window.location = url;
+			}
+		}
+	</script>
 </body>
 
 </html>

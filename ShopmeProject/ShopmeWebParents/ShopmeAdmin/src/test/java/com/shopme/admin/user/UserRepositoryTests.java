@@ -104,4 +104,13 @@ public class UserRepositoryTests {
 		
 		assertThat(user).isNotNull();
 	}
+	
+	@Test
+	public void testCountById() {
+		Integer id = 1;
+		
+		Long count = this.userRepository.countById(id);
+		
+		assertThat(count).isNotNull().isGreaterThan(0);
+	}
 }
