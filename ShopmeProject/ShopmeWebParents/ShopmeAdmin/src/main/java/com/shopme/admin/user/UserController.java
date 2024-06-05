@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.shopme.admin.FileUploadUtil;
 import com.shopme.commons.entity.Role;
 import com.shopme.commons.entity.User;
 
@@ -56,6 +58,11 @@ public class UserController {
 		System.out.println(user.toString());
 		System.out.println(multipartFile.getOriginalFilename());
 
+		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+		String uploadDir = "shopuser-photos";
+		FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+
+		user.setPhotos(fileName);
 		// this.userService.save(user);
 		
 		// use for past data to redirect url
