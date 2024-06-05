@@ -41,7 +41,8 @@
 					<tr th:each="user : ${users}" th:object="${user}">
 						<td th:text="*{id}"></td>
 						<td class="text-center">
-							<i class="fa-solid fa-user fa-1x icon-dark"></i>
+							<i th:if="*{photos == null}" class="fa-solid fa-user fa-1x icon-dark"></i>
+							<img width="25" th:if="*{photos != null}" th:src="@{${user.photosImagePath}}">
 						</td>
 						<td th:text="*{email}"></td>
 						<td th:text="*{firstName}"></td>

@@ -57,11 +57,13 @@ public class UserController {
 		@RequestParam("image") MultipartFile multipartFile) {
 		if (!multipartFile.isEmpty()) {
 			String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-			String uploadDir = "shopuser-photos/" + user.getId();
+			String uploadDir = "user-photos";
 
 			FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
 	
 			user.setPhotos(fileName);
+		} else {
+			user.setPhotos(null);
 		}
 		
 		this.userService.save(user);

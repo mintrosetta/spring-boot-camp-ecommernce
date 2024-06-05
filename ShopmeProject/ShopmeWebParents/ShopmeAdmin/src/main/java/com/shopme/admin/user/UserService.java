@@ -32,7 +32,7 @@ public class UserService {
 		return (List<Role>) this.roleRepository.findAll();
 	}
 
-	public void save(User user) {
+	public Integer save(User user) {
 		boolean isUpdateUser = (user.getId() != null);
 		if (isUpdateUser) {
 			User existingUser = this.userRepository.findById(user.getId()).get();
@@ -44,7 +44,8 @@ public class UserService {
 			this.encodePassword(user);
 		}
 		
-		this.userRepository.save(user);
+		User newUser = this.userRepository.save(user);
+		return newUser.getId();
 	}
 	
 	private void encodePassword(User user) {

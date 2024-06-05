@@ -25,4 +25,17 @@ public class FileUploadUtil {
             System.out.println(ex.getMessage());
         }
     }
+
+    public static void removeFile(String dir, String fileName) {
+        try {
+            Path path = Paths.get(dir);
+            Path pathFile = path.resolve(fileName);
+
+            if (Files.exists(pathFile)) {
+                Files.delete(pathFile);
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
 }

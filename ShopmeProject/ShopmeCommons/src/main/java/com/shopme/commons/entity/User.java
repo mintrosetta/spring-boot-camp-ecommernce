@@ -12,6 +12,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "users")
@@ -130,5 +131,12 @@ public class User {
 	public String toString() {
 		return "User [id=" + id + ", email=" + email + ", firstName=" + firstName + ", lastName=" + lastName
 				+ ", roles=" + roles + "]";
+	}
+
+	@Transient // use for tell hibernate, this getter is not mapping with any fields in database
+	public String getPhotosImagePath() {
+		if (this.getId() == null || this.photos == null) return "/images/default-image.png";
+
+		return "/user-photos/" + this.getPhotos();
 	}
 }
