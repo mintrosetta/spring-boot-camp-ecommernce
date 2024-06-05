@@ -3,6 +3,7 @@ package com.shopme.admin.user;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -30,11 +31,7 @@ public class UserController {
 	
 	@GetMapping("")
 	public String viewAllUser(Model model) {
-		List<User> users = this.userService.getUsers();
-
-		model.addAttribute("users", users);
-		
-		return "users/index";
+		return this.listByPage(1, model);
 	}
 	
 	@GetMapping("create")
@@ -119,5 +116,14 @@ public class UserController {
 	public String enableUserById(@PathVariable("userId") Integer userId, Model model) {
 		this.userService.updateUSerEnabledStatus(userId, true);
 		return "redirect:/users";
+	}
+
+	@GetMapping("page/{pageNumber}")
+	public String listByPage(@PathVariable("pageNumber") int pageNumber, Model model) {
+		Page<User> listByPage = this.userService.listByPage(pageNumber);
+
+		model.addAttribute("users", listByPage.getContent());
+
+		return "users/index";
 	}
 }
