@@ -55,15 +55,16 @@ public class UserController {
 		@ModelAttribute("user") User user, 
 		RedirectAttributes redirectAttributes,
 		@RequestParam("image") MultipartFile multipartFile) {
-		System.out.println(user.toString());
-		System.out.println(multipartFile.getOriginalFilename());
+		if (!multipartFile.isEmpty()) {
+			String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+			String uploadDir = "shopuser-photos/" + user.getId();
 
-		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-		String uploadDir = "shopuser-photos";
-		FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
-
-		user.setPhotos(fileName);
-		// this.userService.save(user);
+			FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+	
+			user.setPhotos(fileName);
+		}
+		
+		this.userService.save(user);
 		
 		// use for past data to redirect url
 		redirectAttributes.addFlashAttribute("message", "The user has been saved successfully.");
