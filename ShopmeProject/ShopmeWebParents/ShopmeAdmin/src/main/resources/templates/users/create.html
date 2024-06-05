@@ -1,146 +1,126 @@
 <!DOCTYPE html>
 <html>
+
 <head xmlns:th="http://www.thymeleaf.org">
-<meta charset="UTF-8" http-equiv="Content-Type">
-<meta name="viewport"
-	content="width=device-width, initial-scole=1.0, minimum-scale=1.0">
-<title th:text="${pageTitle}"></title>
-<link rel="stylesheet" type="text/css"
-	th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}">
-<script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}"></script>
+	<meta charset="UTF-8" http-equiv="Content-Type">
+	<meta name="viewport" content="width=device-width, initial-scole=1.0, minimum-scale=1.0">
+	<title th:text="${pageTitle}"></title>
+	<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}">
+	<script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}"></script>
 </head>
+
 <body>
 	<nav th:replace="~{commons/navbar :: navbar}"></nav>
-	
+
 	<div class="container">
 		<div>
 			<h2>Manage User | [[${pageTitle}]]</h2>
 		</div>
-		
-		<form 
-			th:action="@{/users/create}" 
-			method="POST" 
-			th:object="${user}"
-			style="max-width: 700px; margin: 0 auto;"
-			id="formCreateUser"
-			onsubmit="">
+
+		<form th:action="@{/users/create}" method="POST" th:object="${user}" style="max-width: 700px; margin: 0 auto;"
+			id="formCreateUser" onsubmit="">
 			<div class="border border-secondary rounded p-3">
 				<input type="hidden" th:field="*{id}">
 				<div class="form-group row my-2">
 					<label class="form-label col-sm-4">Email</label>
 					<div class="col-sm-8">
-						<input type="email" class="form-control" id="email" th:field="*{email}" required minlength="8" maxlength="128">
+						<input type="email" class="form-control" id="email" th:field="*{email}" required minlength="8"
+							maxlength="128">
 					</div>
 				</div>
-				
+
 				<div class="form-group row my-2">
 					<label class="form-label col-sm-4">First name</label>
 					<div class="col-sm-8">
-						<input type="text" class="form-control" th:field="*{firstName}" required minlength="2" maxlength="45">
+						<input type="text" class="form-control" th:field="*{firstName}" required minlength="2"
+							maxlength="45">
 					</div>
 				</div>
-				
+
 				<div class="form-group row my-2">
 					<label class="form-label col-sm-4">Last name</label>
 					<div class="col-sm-8">
-						<input type="text" class="form-control" th:field="*{lastName}" required minlength="2" maxlength="45">
+						<input type="text" class="form-control" th:field="*{lastName}" required minlength="2"
+							maxlength="45">
 					</div>
 				</div>
-				
+
 				<div class="form-group row my-2">
 					<label class="form-label col-sm-4">Password</label>
 					<div class="col-sm-8">
-						<input 
-							th:if="${user.id == null}" 
-							type="password" 
-							class="form-control" 
-							th:field="*{password}" 
-							required 
-							minlength="8" 
-							maxlength="20">
-							
-						<input 
-							th:if="${user.id != null}" 
-							type="password" 
-							class="form-control" 
-							th:field="*{password}"  
-							minlength="8" 
-							maxlength="20">
+						<input th:if="${user.id == null}" type="password" class="form-control" th:field="*{password}"
+							required minlength="8" maxlength="20">
+
+						<input th:if="${user.id != null}" type="password" class="form-control" th:field="*{password}"
+							minlength="8" maxlength="20">
 					</div>
 				</div>
-				
+
 				<div class="form-group row my-2">
 					<label class="form-label col-sm-4">Role</label>
 					<div class="col-sm-8">
-						<th:block th:each="role : ${roles}" >
-							<input 
-								type="checkbox" 
-								th:field="${user.roles}" 
-								th:text="${role.name}" 
+						<th:block th:each="role : ${roles}">
+							<input type="checkbox" th:field="${user.roles}" th:text="${role.name}"
 								th:value="${role.id}">
 							<small th:text="${role.description}"></small>
 							<br>
 						</th:block>
 					</div>
 				</div>
-				
+
 				<div class="form-group row my-2">
 					<label class="form-label col-sm-4">Enabled</label>
 					<div class="col-sm-8">
 						<input type="checkbox" th:field="*{enabled}">
 					</div>
 				</div>
-				
+
 				<div class="form-group row my-2">
 					<label class="form-label col-sm-4">Photos</label>
 					<div class="col-sm-8">
-						<input type="file" id="fileImage" accept="image/png, image/jpeg" class="mb-2"/>
-						<img 
-							id="thumbnail" 
-							alt="photos preview" 
-							width="100" 
-							th:src="@{/images/user-default.png}" 
-							class="img-fluid"/>
+						<input type="file" id="fileImage" accept="image/png, image/jpeg" class="mb-2" />
+						<img id="thumbnail" alt="photos preview" width="100" th:src="@{/images/user-default.png}"
+							class="img-fluid" />
 					</div>
 				</div>
 
 				<div id="errors"></div>
-				
+
 				<div class="text-center">
 					<input type="submit" value="Create" class="btn btn-primary">
 					<input type="button" value="Cancel" class="btn btn-outline-secondary" id="cancelBtn">
 				</div>
-			</div>	
+			</div>
 		</form>
 
 		<div class="text-center">
 			<p>Shopme control panel - Copyright &copy; shopme</p>
 		</div>
 	</div>
-	
+
 	<script>
 		document.getElementById('fileImage').onchange = (e) => {
 			const files = e.target.files;
-			
+
 			if (FileReader && files && files.length) {
 				const fr = new FileReader();
 				fr.onload = () => {
 					document.getElementById('thumbnail').src = fr.result;
 				}
-				
+
 				fr.readAsDataURL(files[0]);
 			}
-			
+
 		}
-	
+
 		document.getElementById('cancelBtn').addEventListener('click', () => {
 			window.location = '[[@{/users}]]'
 		});
-		
-		function checkEmailUnique(form) {	
+
+		function checkEmailUnique(form) {
 			const userId = document.getElementById('id').value;
 			if (userId != null) return true;
-				
+
 			const url = '[[@{/api/users/check_email}]]';
 			const email = document.getElementById('email').value;
 
@@ -155,9 +135,10 @@
 					errors.innerHTML = `<p class='alert alert-danger'>Email ${email} is aleady to use</p>`
 				}
 			});
-			
+
 			return false;
 		}
 	</script>
 </body>
+
 </html>
