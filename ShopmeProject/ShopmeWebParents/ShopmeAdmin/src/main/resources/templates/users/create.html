@@ -17,8 +17,13 @@
 			<h2>Manage User | [[${pageTitle}]]</h2>
 		</div>
 
-		<form th:action="@{/users/create}" method="POST" th:object="${user}" style="max-width: 700px; margin: 0 auto;"
-			id="formCreateUser" onsubmit="">
+		<form 
+			th:action="@{/users/create}" 
+			method="POST" 
+			th:object="${user}" 
+			style="max-width: 700px; margin: 0 auto;"
+			id="formCreateUser" 
+			enctype="multipart/form-data">
 			<div class="border border-secondary rounded p-3">
 				<input type="hidden" th:field="*{id}">
 				<div class="form-group row my-2">
@@ -78,7 +83,7 @@
 				<div class="form-group row my-2">
 					<label class="form-label col-sm-4">Photos</label>
 					<div class="col-sm-8">
-						<input type="file" id="fileImage" accept="image/png, image/jpeg" class="mb-2" />
+						<input type="file" id="fileImage" name="image" accept="image/png, image/jpeg" class="mb-2" />
 						<img id="thumbnail" alt="photos preview" width="100" th:src="@{/images/user-default.png}"
 							class="img-fluid" />
 					</div>

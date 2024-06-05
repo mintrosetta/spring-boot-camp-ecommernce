@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shopme.commons.entity.Role;
@@ -47,9 +49,14 @@ public class UserController {
 	}
 	
 	@PostMapping("create")
-	public String createUser(@ModelAttribute("user") User user, RedirectAttributes redirectAttributes) {
+	public String createUser(
+		@ModelAttribute("user") User user, 
+		RedirectAttributes redirectAttributes,
+		@RequestParam("image") MultipartFile multipartFile) {
 		System.out.println(user.toString());
-		this.userService.save(user);
+		System.out.println(multipartFile.getOriginalFilename());
+
+		// this.userService.save(user);
 		
 		// use for past data to redirect url
 		redirectAttributes.addFlashAttribute("message", "The user has been saved successfully.");
